@@ -26,8 +26,9 @@ export const chatWithGemini = async (history: Message[]): Promise<string> => {
     systemInstruction: SYSTEM_INSTRUCTION 
   });
 
+  // Corrigido: Agora o "contents" é declarado apenas uma vez
   const contents = history
-    .filter(msg => msg.text.trim() !== "")
+    .filter(msg => msg.text && msg.text.trim() !== "")
     .map(msg => ({
       role: msg.role === 'user' ? 'user' : 'model',
       parts: [{ text: msg.text }]
