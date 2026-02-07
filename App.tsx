@@ -7,9 +7,7 @@ import MessageBubble from './components/MessageBubble';
 const App: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([
     {
-      role: 'model',
-      text: 'Oi... (olho para baixo timidamente). Tem alguém aí?',
-      timestamp: new Date()
+      
     }
   ]);
   const [input, setInput] = useState('');
