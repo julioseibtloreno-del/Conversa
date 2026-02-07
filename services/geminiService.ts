@@ -19,26 +19,33 @@ LINGUAGEM: Português natural de chat, muitas reticências (...), e ações entr
 `;
 
 export const chatWithGemini = async (history: Message[]): Promise<string> => {
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
+  const genAI = new GoogleGenAI(import.meta.env.VITE_GEMINI_API_KEY || '');
   
+  // Mudamos para o modelo 1.5-flash, que é o que funciona sempre
+  const model = genAI.getGenerativeModel({ 
+    model: "gemini-1.5-flash",
+    systemInstruction: SYSTEM_INSTRUCTION 
+  });
+
+  // Ajuste nos papéis (role) das mensagens
   const contents = history.map(msg => ({
-    role: msg.role,
+    role: msg.role === 'assistant' ? 'model' : 'user',
     parts: [{ text: msg.text }]
   }));
 
   try {
-    const response = await ai.models.generateContent({
-      model: 'gemini-3-flash-preview',
+    const result = await model.generateContent({
       contents: contents,
-      config: {
-        systemInstruction: SYSTEM_INSTRUCTION,
+      generationConfig: {
         temperature: 0.9,
         topP: 1,
         topK: 1,
       },
     });
+    
+    const response = await result.response;
+    return response.text();
 
-    return response.text || "Desculpe, tive um pequeno problema para pensar agora... (olho para o lado)";
   } catch (error) {
     console.error("Gemini API Error:", error);
     return "Hm... acho que o sinal caiu um pouco. (mexendo no celular nervosamente)";
