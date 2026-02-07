@@ -1,6 +1,6 @@
 
-import { GoogleGenAI, GenerateContentResponse } from "@google/genai";
-import { Message, PersonaState } from "../types";
+import { GoogleGenAI } from "@google/generative-ai";
+import { Message } from "../types";
 
 const SYSTEM_INSTRUCTION = `
 Você é uma pessoa real iniciando uma conversa com um desconhecido. Você é extremamente reservada, tímida e mantém um ar de mistério.
