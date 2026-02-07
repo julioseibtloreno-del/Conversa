@@ -1,4 +1,3 @@
-
 import { GoogleGenAI } from "@google/generative-ai";
 import { Message } from "../types";
 
@@ -26,7 +25,6 @@ export const chatWithGemini = async (history: Message[]): Promise<string> => {
     systemInstruction: SYSTEM_INSTRUCTION 
   });
 
-  // Corrigido: Agora o "contents" é declarado apenas uma vez
   const contents = history
     .filter(msg => msg.text && msg.text.trim() !== "")
     .map(msg => ({
@@ -52,3 +50,4 @@ export const chatWithGemini = async (history: Message[]): Promise<string> => {
     return "Hm... acho que o sinal caiu um pouco. (mexendo no celular nervosamente)";
   }
 };
+
