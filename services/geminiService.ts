@@ -1,4 +1,3 @@
-
 import { GoogleGenAI } from "@google/generative-ai";
 import { Message } from "../types";
 
@@ -51,4 +50,3 @@ export const chatWithGemini = async (history: Message[]): Promise<string> => {
     return "Hm... acho que o sinal caiu um pouco. (mexendo no celular nervosamente)";
   }
 };
-
