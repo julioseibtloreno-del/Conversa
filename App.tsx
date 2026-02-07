@@ -5,11 +5,7 @@ import { chatWithGemini } from './services/geminiService';
 import MessageBubble from './components/MessageBubble';
 
 const App: React.FC = () => {
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      
-    }
-  ]);
+  const [messages, setMessages] = useState<Message[]>([])
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
