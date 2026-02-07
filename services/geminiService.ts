@@ -21,17 +21,17 @@ LINGUAGEM: Português natural de chat, muitas reticências (...), e ações entr
 export const chatWithGemini = async (history: Message[]): Promise<string> => {
   const genAI = new GoogleGenAI(import.meta.env.VITE_GEMINI_API_KEY || '');
   
-  // Mudamos para o modelo 1.5-flash, que é o que funciona sempre
   const model = genAI.getGenerativeModel({ 
     model: "gemini-1.5-flash",
     systemInstruction: SYSTEM_INSTRUCTION 
   });
 
-  // Ajuste nos papéis (role) das mensagens
-  const contents = history.map(msg => ({
-    role: msg.role === 'assistant' ? 'model' : 'user',
-    parts: [{ text: msg.text }]
-  }));
+  const contents = history
+    .filter(msg => msg.text.trim() !== "")
+    .map(msg => ({
+      role: msg.role === 'user' ? 'user' : 'model',
+      parts: [{ text: msg.text }]
+    }));
 
   try {
     const result = await model.generateContent({
